@@ -105,10 +105,3 @@ def get_downloader(downloader_type: str, destination: str, download_url: str) ->
 
     if downloader_type == "s3":
         return S3Downloader(destination, download_url)
-
-
-
-if __name__ == '__main__':
-    downloader = get_downloader("s3", destination=r"C:\Users\edanp\Studies\JobInterviews\BlueWhite\ROSAnnotator\dataset",
-                                download_url='racecar-dataset')
-    downloader.download()

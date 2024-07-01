@@ -101,11 +101,16 @@ def find_files_with_images(bucket_path: str) -> list[str]:
 
 if __name__ == '__main__':
 
-    BUCKET_NAME = 'racecar-dataset'
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bucket", type=str, default="racecar-dataset", help="Source for db3 file")
+    parser.add_argument("--destination", type=str, help="Destination for extracted images and annotations")
+    args = parser.parse_args()
+
     prefixes = find_files_with_images('racecar-dataset')
-    destination = r"C:\Users\edanp\Studies\JobInterviews\BlueWhite\ROSAnnotator\dataset"
+    destination = args.destination
     downloader = get_downloader('s3', destination=destination,
-                                download_url=BUCKET_NAME)
+                                download_url=args.bucket)
     prefixes = [prefix for prefix in prefixes if "MULTI" in prefix]
     print("Remaining prefixes are", prefixes)
-    downloader.download(prefixes=[prefixes[-1]])
+    downloader.download(prefixes=prefixes)
